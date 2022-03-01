@@ -3,14 +3,14 @@
 #include <chrono>
 #include <ctime>
 
-
+const int number = 50;
 using namespace std;
 /*
     this function creates a random using the srand() as
     its seed time
     @return random number
 */
-int random(){
+int randomTime(){
    return 50 + (rand()%50);
 }
 
@@ -18,6 +18,7 @@ void timetaken(){
     auto givemetime = chrono::system_clock::to_time_t(chrono::system_clock::now());
     cout << ctime(&givemetime)<<endl;
 }
+
 /*  calculate the average marks of the student
 
     @param number of course taken
@@ -25,39 +26,35 @@ void timetaken(){
 
     @return average marks of the student
 */
-int average(int course, int total ){
-    return total/course;
+int average(int student, int course,int marks[][number] ){
+        int sum=0;
+        for(int j=0;j <course;j++){
+            sum +=marks[student][j];
+        }
+    return sum/course;
 }
 
 int main(){
     ios::sync_with_stdio(0), cin.tie(0);
 // time taken to start the program
-    timetaken();
-
+cout << "";
     int testcases;
     cin >> testcases;
     int course = 50;
     //this will use the current time to seed the random value
     srand(time(0));
-
-    int scoreArray[testcases][course];
-    
+    int scoreArray[testcases][number];
     /*  this loop:
     1:enters the marks of the students
-    
     */
+    timetaken();
     for(int t=0; t < testcases;t++){
-        for(int j=0; j <course;j++){
-            int randomNumber = random();
-            scoreArray[t][j]=randomNumber;
+    int sum =0;
+        for(int j=0; j < course;j++){
+            scoreArray[t][j]=randomTime();
         }
-        //calculate the sum and average total mark for the students
-        int sum =0;
-        for(int j=0; j <course;j++){
-            sum += scoreArray[t][j];
-        }
-        int averageMark= average(course,sum);
-        cout << "Reg No."<< t+1 << " " << averageMark << "\n";
+        //prints the average of the students
+    cout << "Reg No."<< t+1 << " " << average(t,course,scoreArray) << "\n";
     }
     // the time taken to end the program
     timetaken();
